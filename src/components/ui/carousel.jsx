@@ -1,7 +1,8 @@
 "use client";
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft} from "lucide-react"
+import {ChevronRight} from "@/app/_icons/ChevronRight"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -52,7 +53,7 @@ function Carousel({
     if (event.key === "ArrowLeft") {
       event.preventDefault()
       scrollPrev()
-    } else if (event.key === "ArrowRight") {
+    } else if (event.key === "ChevronRight") {
       event.preventDefault()
       scrollNext()
     }
@@ -155,7 +156,7 @@ function CarouselPrevious({
       data-slot="carousel-previous"
       variant={variant}
       size={size}
-      className={cn( orientation === "horizontal"
+      className={cn("absolute w-[40px] h-[40px] rounded-full", orientation === "horizontal"
         ? "top-1/2 -left-12 -translate-y-1/2"
         : "-top-12 left-1/2 -translate-x-1/2 rotate-90", className)}
       disabled={!canScrollPrev}
@@ -180,13 +181,13 @@ function CarouselNext({
       data-slot="carousel-next"
       variant={variant}
       size={size}
-      className={cn("absolute size-8 rounded-full", orientation === "horizontal"
+      className={cn("absolute w-[40px] h-[40px] rounded-full", orientation === "horizontal"
         ? "top-1/2 -right-12 -translate-y-1/2"
         : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90", className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}>
-      <ArrowRight />
+      <ChevronRight/>
       <span className="sr-only">Next slide</span>
     </Button>
   );

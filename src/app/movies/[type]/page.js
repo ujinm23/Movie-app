@@ -23,6 +23,8 @@ export default function MoviesType() {
     };
     useEffect(() => {
         getPopularData();
+        getUpcomingData();
+        getTopRatedData();
     }, []);
 
     return (
