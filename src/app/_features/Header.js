@@ -6,7 +6,7 @@ import { DarkModeIcon } from "../_icons/DarkModeIcon";
 
 export function Header() {
   return (
-    <header className="w-[1440px] h-[59px] flex items-center justify-between">
+    <header className="w-[1440px] h-[59px] flex items-center justify-between px-[80px]">
       <div className="flex items-center gap-2 ml-6">
         <FilmIcon />
         <p className="text-[#4338CA] text-[16px] italic font-bold">Movie Z</p>
@@ -20,7 +20,8 @@ export function Header() {
        </div>
       </div>
       <div className="w-[36px] h-[36px] flex justify-center items-center rounded-[10px] border-1 border-[#E4E4E7]">
-        <DarkModeIcon/></div>      
+        <DarkModeIcon/>
+        </div>      
     </header>
   );
 }
