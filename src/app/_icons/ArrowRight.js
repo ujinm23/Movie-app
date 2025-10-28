@@ -1,9 +1,9 @@
 import * as React from "react"
 export const ArrowRight= (props) => (
-  <svg
+ <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={11}
-    height={11}
+    width={16}
+    height={16}
     fill="none"
     {...props}
   >
@@ -11,7 +11,7 @@ export const ArrowRight= (props) => (
       stroke="#18181B"
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M.5 5.167h9.333m0 0L5.167.5m4.666 4.667L5.167 9.833"
+      d="M3.333 8h9.333m0 0L8 3.333M12.666 8 8 12.667"
     />
   </svg>
 )

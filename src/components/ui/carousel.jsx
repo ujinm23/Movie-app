@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft} from "lucide-react"
+import { ChevronLeft} from "@/app/_icons/ChevronLeft"
 import {ChevronRight} from "@/app/_icons/ChevronRight"
 
 import { cn } from "@/lib/utils"
@@ -50,7 +50,7 @@ function Carousel({
   }, [api])
 
   const handleKeyDown = React.useCallback((event) => {
-    if (event.key === "ArrowLeft") {
+    if (event.key === "ChevronLeft") {
       event.preventDefault()
       scrollPrev()
     } else if (event.key === "ChevronRight") {
@@ -162,7 +162,7 @@ function CarouselPrevious({
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}>
-      <ArrowLeft />
+      <ChevronLeft />
       <span className="sr-only">Previous slide</span>
     </Button>
   );

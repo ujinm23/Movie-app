@@ -56,10 +56,10 @@ export function HeroSection() {
         </CarouselContent>
 
         <CarouselPrevious
-          className="absolute top-1/2 left-6 z-10 -translate-y-1/2 bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center"
+          className="absolute top-1/2 left-6  bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center"
         />
         <CarouselNext
-          className="absolute top-1/2 right-6 z-10 -translate-y-1/2 bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center"
+          className="absolute top-1/2 right-6  bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center"
         />
       </Carousel>
     </div>

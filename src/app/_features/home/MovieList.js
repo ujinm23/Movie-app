@@ -11,7 +11,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const ACCESS_TOKEN =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
 
-export const MovieList = ({ type }) => {
+export const MovieList = ({ type, seeMore }) => {
   const router = useRouter();
   const [popularMoviesData, setPopularMoviesData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -54,13 +54,15 @@ export const MovieList = ({ type }) => {
         <h3 className="font-semibold inter text-[24px]">
           {type.toUpperCase()}
         </h3>
-        <button
-          onClick={handleSeeMoreButton}
-          className="flex items-center justify-center text-[14px] text-[#09090B] gap-[8px]"
-        >
-          See More
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        {seeMore && (
+          <button
+            onClick={handleSeeMoreButton}
+            className="flex justify-center items-center p-0 h-[36px] text-[14px] text-[#09090B] gap-[8px]"
+          >
+            <p className="w-[64px]">See More</p>
+            <ArrowRight />
+          </button>
+        )}
       </div>
 
       <div className="w-[1277px] h-[910px] overflow-hidden">
