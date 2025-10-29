@@ -3,7 +3,7 @@ export const ChevronDown = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={16}
-    height={17}
+    height={16}
     fill="none"
     {...props}
   >
@@ -11,7 +11,7 @@ export const ChevronDown = (props) => (
       stroke="#18181B"
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="m4 6.5 4 4 4-4"
+      d="m4 6 4 4 4-4"
     />
   </svg>
 )
