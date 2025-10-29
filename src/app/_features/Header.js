@@ -1,22 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { StarIcon } from "../_icons/StarIcon";
+import { useEffect, useState } from "react";
 import { FilmIcon } from "../_icons/FilmIcon";
 import { ChevronDown } from "../_icons/ChevronDown";
 import { SearchIcon } from "../_icons/SearchIcon";
 import { DarkModeIcon } from "../_icons/DarkModeIcon";
 import { Seperator } from "../_icons/Seperator";
+import { ChevronRight } from "../_icons/ChevronRight";
 
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -26,65 +24,94 @@ const ACCESS_TOKEN =
 
 export function Header() {
   const router = useRouter();
+  const [genres, setGenres] = useState([]);
 
   const handleLogoClick = () => {
     router.push("/");
   };
 
-  const getGenreData = async () => {
-    const genreEndpoint = `${BASE_URL}/genre/movie/list?language=en`;
-    const response = await fetch(genreEndpoint, {
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    allResults.push(...data.results);
-  };
+  // Fetch genres from TMDB API
+  useEffect(() => {
+    const getGenreData = async () => {
+      try {
+        const genreEndpoint = `${BASE_URL}/genre/movie/list?language=en`;
+        const response = await fetch(genreEndpoint, {
+          headers: {
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        setGenres(data.genres || []);
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    };
+
+    getGenreData();
+  }, []);
 
   return (
     <header className="w-[1440px] h-[59px] flex items-center justify-between px-[80px]">
       <div
-        className="flex items-center gap-2 cursor-pointer"
+        className="flex items-center cursor-pointer gap-[8px]"
         onClick={handleLogoClick}
       >
         <FilmIcon />
         <p className="text-[#4338CA] text-[16px] italic font-bold">Movie Z</p>
       </div>
       <div className="w-[488px] h-[36px] flex gap-[12px] ">
-        <div className="w-[97px] h-[36px] border-1 border-[#E4E4E7] gap-[8px] radius/rounded-md inter px-[16px] font-medium text-[14px] flex justify-center items-center cursor-pointer">
+        {" "}
+        <div className="w-[97px] h-[36px] border-1 border-[#E4E4E7] gap-[8px] rounded inter px-[16px] font-medium text-[14px] flex justify-center items-center cursor-pointer">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  <NavigationMenuTrigger />
+                <NavigationMenuTrigger className="w-full h-full flex items-center justify-center gap-[8px]font-medium text-[14px]">
+                  <ChevronDown />
                   Genre
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {" "}
-                    <div className="w-[577px] h-[333px] border border-[#E4E4E7] rounded p-[20px]">
-                      <div className="h-[60px]">
-                        <h3 className="font-semibold text-[24px]">Genre</h3>
-                        <p>See lists of movies by genre</p>
-                      </div>
-                      <div className="h-[33px]">
-                        <Seperator />
-                      </div>
-                      <div></div>
-                    </div>
-                  </ul>
+
+                <NavigationMenuContent className="p-[20px] border border-[#E4E4E7] rounded h-[333px] max-w-[577px] bg-white">
+                  <div className="h-[60px]">
+                    <h3 className="font-semibold text-[24px]">Genre</h3>
+                    <p>See lists of movies by genre</p>
+                  </div>
+
+                  <div className="h-[33px] my-[10px]">
+                    <Seperator />
+                  </div>
+
+                  <div className="flex flex-wrap gap-[16px] mt-[10px]">
+                    {genres.length > 0 ? (
+                      genres.map((genre) => (
+                        <div
+                          key={genre.id}
+                          onClick={() =>
+                            router.push(`/movies/genre/${genre.id}`)
+                          }
+                          className="flex items-center border border-[#E4E4E7] rounded-full py-[2px] px-[10px] cursor-pointer hover:bg-[#F4F4F5] transition w-fit"
+                        >
+                          <p className="text-[12px] inter font-semibold text-[#09090B] mr-1">
+                            {genre.name}
+                          </p>
+                          <ChevronRight />
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-gray-400">Loading...</p>
+                    )}
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="w-[379px] h-[36px] border-1 border-[#E4E4E7] text-[#71717A] px-[12px] items-center gap-[10px] flex rounded">
+        <div className="w-[379px] h-[36px] border border-[#E4E4E7] text-[#71717A] px-[12px] flex items-center gap-[10px] rounded">
           <SearchIcon className="opacity-50" /> Search..
         </div>
       </div>
-      <div className="w-[36px] h-[36px] flex justify-center items-center rounded-[10px] border-1 border-[#E4E4E7]">
+
+      <div className="w-[36px] h-[36px] flex justify-center items-center rounded-[10px] border border-[#E4E4E7]">
         <DarkModeIcon />
       </div>
     </header>
