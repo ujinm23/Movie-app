@@ -13,10 +13,11 @@ export function MovieCard(props) {
         ></div>
         <div className="w-[229.73px] h-[95px] p-[8px]">
           <div className="flex flex-col items-start">
-            <div className="flex ">
+            <div className="flex items-center gap-[4px]">
               <StarIcon className="w-[16px] h-[18px] object-contain" />
+              <div className="flex ">
               <p className="font-medium">{rating}</p>
-              <p className="text-[#71717A] text-[12px]">/10</p>
+              <p className="text-[#71717A] text-[12px] Font Sizes/text-xs justify-end">/10</p></div>
             </div>
             <p>{title}</p>
           </div>
