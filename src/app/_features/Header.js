@@ -31,7 +31,6 @@ export function Header() {
     router.push("/");
   };
 
-  // Fetch genres from TMDB API
   useEffect(() => {
     const getGenreData = async () => {
       try {
