@@ -59,7 +59,7 @@ export const MovieList = ({ type, seeMore }) => {
             onClick={handleSeeMoreButton}
             className="flex justify-center items-center p-0 h-[36px] text-[14px] text-[#09090B] gap-[8px]"
           >
-            <p className="w-[64px]">See More</p>
+            <p className="w-[64px] font-medium text-[#09090B]">See More</p>
             <ArrowRight />
           </button>
         )}

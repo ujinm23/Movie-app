@@ -12,7 +12,6 @@ export default function Home() {
         <MovieList type="upcoming" seeMore={true} />
         <MovieList type="popular" seeMore={true} />
         <MovieList type="top_rated" seeMore={true} />
-
         <Footer />
       </div>
     </div>
