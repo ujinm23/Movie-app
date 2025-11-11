@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { MovieList } from "@/app/_features/home/MovieList";
 import { Header } from "@/app/_features/Header";
 import { Footer } from "@/app/_features/Footer";
+import { ACCESS_TOKEN, BASE_URL } from "@/constants";
 import {
   Pagination,
   PaginationContent,
@@ -14,11 +15,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-const BASE_URL = "https://api.themoviedb.org/3";
-
-const ACCESS_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
 
 export default function MoviesType() {
   const param = useParams();
@@ -54,27 +50,64 @@ export default function MoviesType() {
       <Header />
       <MovieList type={param.type} seeMore={false} />
       <div className="w-[1220px]">
-        <Pagination className="flex justify-end">
-          <PaginationContent className="w-[382px] justify-between flex">
+        <Pagination className="flex justify-end px-[15px]">
+          <PaginationContent className="w-[426px] justify-between flex">
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious
+                href="#"
+                onClick={() => {
+                  if (page > 1) setPage(page - 1);
+                }}
+              />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#" isActive>
+              <PaginationLink
+                href="#"
+                isActive={page === 1}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(1);
+                }}
+              >
                 1
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
+              <PaginationLink
+                href="#"
+                isActive={page === 2}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(2);
+                }}
+              >
+                2
+              </PaginationLink>
             </PaginationItem>
+
             <PaginationItem>
               <PaginationEllipsis />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">5</PaginationLink>
+              <PaginationLink
+                href="#"
+                isActive={page === 5}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(5);
+                }}
+              >
+                5
+              </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(page + 1);
+                }}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

@@ -9,6 +9,7 @@ import { DarkModeIcon } from "../_icons/DarkModeIcon";
 import { Seperator } from "../_icons/Seperator";
 import { ChevronRight } from "../_icons/ChevronRight";
 import { ChevronRight2 } from "../_icons/ChevronRight2";
+import { ACCESS_TOKEN, BASE_URL } from "@/constants";
 
 import {
   NavigationMenu,
@@ -17,11 +18,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
-const BASE_URL = "https://api.themoviedb.org/3";
-
-const ACCESS_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
+import { SearchSection } from "./header/SearchSection";
 
 export function Header() {
   const router = useRouter();
@@ -29,6 +26,10 @@ export function Header() {
 
   const handleLogoClick = () => {
     router.push("/");
+  };
+
+  const handleGenreClick = () => {
+    router.push(`/movies/${genre.id}`);
   };
 
   useEffect(() => {
@@ -86,9 +87,7 @@ export function Header() {
                       genres.map((genre) => (
                         <div
                           key={genre.id}
-                          onClick={() =>
-                            router.push(`/movies/genre/${genre.id}`)
-                          }
+                          onClick={() => router.push(`/genre/${genre.id}`)}
                           className="flex items-center border border-[#E4E4E7] rounded-full gap-[11px] px-[10px] cursor-pointer hover:bg-[#F4F4F5] transition w-fit"
                         >
                           <p className="text-[12px] inter font-semibold text-[#09090B]  mr-1">
@@ -107,7 +106,7 @@ export function Header() {
           </NavigationMenu>
         </div>
         <div className="w-[379px] h-[36px] border border-[#E4E4E7] text-[#71717A] px-[12px] flex items-center gap-[10px] rounded">
-          <SearchIcon className="opacity-50" /> Search..
+          <SearchSection />
         </div>
       </div>
 

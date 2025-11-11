@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import { ACCESS_TOKEN, BASE_URL } from "@/constants";
 import {
   Carousel,
   CarouselContent,
@@ -25,10 +25,6 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { LoadingMovieList } from "./LoadingMovieList";
-
-const BASE_URL = "https://api.themoviedb.org/3";
-const ACCESS_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
 
 export function HeroSection() {
   const [loading, setLoading] = useState(false);
@@ -121,7 +117,7 @@ export function HeroSection() {
                     <div className="text-[#FFFFFF] flex w-[404px] flex-col gap-[16px] pl-[140px] pt-[144px]">
                       <div className="flex flex-col gap-0">
                         <p className=" font-normal text-[16px]">Now Playing:</p>
-                        <span className="text-[36px] inter font-bold">
+                        <span className="text-[36px] w-[404px] inter font-bold text-sm/10">
                           {movie.title}
                         </span>
                         <div className="flex text-[18px] items-center">
@@ -135,15 +131,36 @@ export function HeroSection() {
                       <div className="w-[302px] text-[12px]">
                         {movie.overview}
                       </div>
-                      <div className="h-[40px] w-[145px] bg-[#F4F4F5] rounded-md text-[#18181B] flex items-center justify-center font-medium text-[14px] gap-[8px]">
-                        <PlayIcon />
-                        <button
-                          onClick={() => handleWatchTrailerButton(movie.id)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Watch Trailer
-                        </button>
-                      </div>
+                      <Dialog>
+                        <form>
+                          <DialogTrigger
+                            asChild
+                            className="h-[40px] w-[145px] bg-[#F4F4F5] rounded-md text-[#18181B] flex items-center justify-center font-medium text-[14px] gap-[8px]"
+                          >
+                            <button
+                              onClick={() => handleWatchTrailerButton(movie.id)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <PlayIcon />
+                              Watch Trailer
+                            </button>
+                          </DialogTrigger>
+                          <DialogContent className="h-[562px] w-[997px] p-0 flex justify-center items-center object-cover bg-[#F4F4F5]">
+                            <DialogTitle className="display: hidden">
+                              {movie.title}
+                            </DialogTitle>
+                            <div>
+                              <iframe
+                                width={997}
+                                height={562}
+                                src={`https://www.youtube.com/embed/${movieTrailer.key}`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              ></iframe>
+                            </div>
+                          </DialogContent>
+                        </form>
+                      </Dialog>
                     </div>
                   </CardContent>
                 </Card>
@@ -154,12 +171,7 @@ export function HeroSection() {
         <CarouselPrevious className="absolute top-1/2 left-6  bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center" />
         <CarouselNext className="absolute top-1/2 right-6  bg-[#F4F4F5] text-white rounded-full p-3 flex items-center justify-center" />
       </Carousel>
-      <Dialog>
-        <form>
-          <DialogContent className="sm:max-w-[425px]"></DialogContent>
-        </form>
-      </Dialog>
-
+      {/* 
       {selectedMovieId && trailerLoading && <div>trailer loading</div>}
       {selectedMovieId && !trailerLoading && (
         <div>
@@ -172,7 +184,7 @@ export function HeroSection() {
             allowFullScreen
           ></iframe>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
