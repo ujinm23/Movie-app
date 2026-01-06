@@ -19,6 +19,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { SearchSection } from "./header/SearchSection";
+import { ThemeToggle } from "../_components/ThemeToggle";
 
 export function Header() {
   const router = useRouter();
@@ -105,13 +106,13 @@ export function Header() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="w-[379px] h-[36px] border border-[#E4E4E7] text-[#71717A] px-[12px] flex items-center gap-[10px] rounded">
+        <div className="w-[379px] h-[36px] border border-[#E4E4E7] text-[#71717A] flex items-center rounded">
           <SearchSection />
         </div>
       </div>
 
       <div className="w-[36px] h-[36px] flex justify-center items-center rounded-[10px] border border-[#E4E4E7]">
-        <DarkModeIcon />
+        <ThemeToggle/>
       </div>
     </header>
   );

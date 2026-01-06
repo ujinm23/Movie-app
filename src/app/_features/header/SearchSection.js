@@ -12,7 +12,7 @@ export const SearchSection = () => {
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 " />
       <input
         placeholder="Search..."
-        className="pl-9 w-64"
+        className="pl-9 w-94.75 h-9"
         value={searchQuery}
         onChange={(e) => {
           setSearchQuery(e.target.value);

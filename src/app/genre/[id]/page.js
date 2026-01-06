@@ -79,7 +79,7 @@ export default function GenreType() {
       <Header />
       <div className="w-[1280px] flex flex-col justify-center gap-[35px]">
         <p className="text-[30px] font-semibold">Search Filter</p>
-        <div className="flex">
+        <div className="flex gap-1">
           <div className="w-[387px] flex flex-col gap-[30px]">
             <div className="h-[36px]">
               <h3 className="font-semibold text-[24px]">Genres</h3>
@@ -115,10 +115,12 @@ export default function GenreType() {
                 {genreResults.map((movie, index) => (
                   <div key={index}>
                     <MovieCard
-                      key={index}
+                      key={movie.id} // Use movie.id as key, not index
+                      movieId={movie.id} // Add this line
                       title={movie.title}
                       imageURL={movie.poster_path}
                       rating={movie.vote_average}
+                      size="small"
                     />
                   </div>
                 ))}
