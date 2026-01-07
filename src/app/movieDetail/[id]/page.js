@@ -17,7 +17,6 @@ export default function MovieDetails() {
   const [showTrailer, setShowTrailer] = useState(false);
   const [posterLoading, setPosterLoading] = useState(true);
   const [backdropLoading, setBackdropLoading] = useState(true);
-
   const [movieDetail, setMovieData] = useState(null);
   const [moviePeople, setPeople] = useState([]);
   const [movieTrailer, setMovieTrailer] = useState({});
@@ -154,67 +153,71 @@ export default function MovieDetails() {
 
         {/* IMAGES */}
         <div className="flex gap-8">
-          {posterLoading && (
-            <div className="w-[290px] h-[428px] bg-gray-300 dark:bg-gray-600" />
-          )}
-          <img
-            className="w-[290px] h-[428px] rounded-sm object-cover"
-            src={`https://image.tmdb.org/t/p/original${movieDetail?.poster_path}`}
-            alt={movieDetail?.title}
-            onLoad={() => setPosterLoading(false)}
-            onError={() => setPosterLoading(false)}
-          />
+          <div className="relative w-[290px] h-[428px]">
+            {posterLoading && (
+              <div className="absolute inset-0 bg-[#F4F4F5] dark:bg-gray-600 rounded-sm animate-pulse" />
+            )}
+            {movieDetail?.poster_path && (
+              <img
+                className="w-full h-full rounded-sm object-cover"
+                src={`https://image.tmdb.org/t/p/original${movieDetail.poster_path}`}
+                alt={movieDetail?.title}
+                onLoad={() => setPosterLoading(false)}
+                onError={() => setPosterLoading(false)}
+              />
+            )}
+          </div>
+
           <div className="relative w-[760px] h-[428px] rounded-sm overflow-hidden bg-black">
-            {/* Skeleton while image loads */}
+            {/* Skeleton while backdrop loads */}
             {backdropLoading && !showTrailer && (
-              <div className="w-[760px] h-[428px]  bg-gray-300 dark:bg-gray-700" />
+              <div className="absolute inset-0 bg-[#F4F4F5] dark:bg-gray-700 " />
+            )}
+
+            {/* Backdrop image */}
+            {movieDetail?.backdrop_path && (
+              <img
+                className={`w-full h-full object-cover`}
+                src={`https://image.tmdb.org/t/p/original${movieDetail.backdrop_path}`}
+                alt={movieDetail?.title}
+                onLoad={() => setBackdropLoading(false)}
+                onError={() => setBackdropLoading(false)}
+              />
+            )}
+
+            {/* Play button for trailer */}
+            {!backdropLoading && !showTrailer && movieTrailer?.key && (
+              <button
+                onClick={() => setShowTrailer(true)}
+                className="absolute left-6 bottom-6 flex items-center gap-3 text-white"
+              >
+                <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 text-black">
+                  <PlayIcon />
+                </div>
+                Play trailer
+              </button>
             )}
 
             {/* Trailer iframe */}
-            {showTrailer && movieTrailer?.key ? (
+            {showTrailer && movieTrailer?.key && (
               <iframe
-                className="w-full h-full"
+                className="w-full h-full absolute inset-0"
                 src={`https://www.youtube.com/embed/${movieTrailer.key}?autoplay=1&mute=1`}
                 title="Movie Trailer"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
-            ) : (
-              <>
-                {/* Backdrop image */}
-                <img
-                  className={`w-full h-full object-cover ${
-                    backdropLoading ? "hidden" : "block"
-                  }`}
-                  src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
-                  alt={movieDetail?.title}
-                  onLoad={() => setBackdropLoading(false)}
-                  onError={() => setBackdropLoading(false)}
-                />
-
-                {/* Play button */}
-                {!backdropLoading && (
-                  <button
-                    onClick={() => setShowTrailer(true)}
-                    className="absolute left-6 bottom-6 flex items-center gap-3 text-white"
-                  >
-                    <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 text-black">
-                      <PlayIcon />
-                    </div>
-                    Play trailer
-                  </button>
-                )}
-              </>
             )}
           </div>
         </div>
         <div className="flex flex-col gap-5 max-w-[1080px]">
           {/* Genres */}
           <section className="flex flex-wrap gap-3">
-            {movieDetail?.genres?.map((g, index) => (
+            {movieDetail?.genres?.map((g) => (
               <span
-                key={index}
-                className="py-0.5 px-2.5 border border-[#E4E4E7] rounded-full text-sm font-medium "
+                key={g.id}
+                onClick={() => router.push(`/genre/${g.id}`)}
+                className="py-0.5 px-2.5 border border-[#E4E4E7] rounded-full text-sm font-medium cursor-pointer"
               >
                 {g.name}
               </span>
