@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { LoadingMovieList } from "./LoadingMovieList";
+import { HeroSkeletonCard } from "@/app/_components/HeroSkeleton";
 
 export function HeroSection() {
   const [loading, setLoading] = useState(false);
@@ -94,7 +95,7 @@ export function HeroSection() {
   if (loading)
     return (
       <div>
-        <LoadingMovieList />
+       <HeroSkeletonCard/>
       </div>
     );
 
@@ -121,7 +122,7 @@ export function HeroSection() {
                           {movie.title}
                         </span>
                         <div className="flex text-[18px] items-center">
-                          <StarIcon />
+                          <StarIcon className=" text-[#FDE047] dark:text-[#FAFAFA]"/>
                           <span className="font-semibold">
                             {Number(movie.vote_average).toFixed(1)}
                           </span>

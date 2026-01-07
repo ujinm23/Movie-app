@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FilmIcon } from "../_icons/FilmIcon";
 import { ChevronDown } from "../_icons/ChevronDown";
 import { SearchIcon } from "../_icons/SearchIcon";
-import { DarkModeIcon } from "../_icons/DarkModeIcon";
+import { DarkModeIcon } from "../_icons/LightModeIcon";
 import { Seperator } from "../_icons/Seperator";
 import { ChevronRight } from "../_icons/ChevronRight";
 import { ChevronRight2 } from "../_icons/ChevronRight2";
@@ -64,16 +64,16 @@ export function Header() {
       </div>
       <div className="w-[488px] h-[36px] flex gap-[12px] ">
         {" "}
-        <div className="w-[97px] h-[36px] border-1 border-[#E4E4E7]  gap-[8px] rounded inter font-medium text-[14px] flex justify-center items-center cursor-pointer">
+        <div className="w-[97px] h-[36px] border-1 border-[#E4E4E7]  gap-[8px] rounded inter font-medium text-[14px] flex justify-center items-center ">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="flex items-center justify-center gap-[8px] font-medium text-[14px]">
-                  <ChevronDown />
+                <NavigationMenuTrigger className="flex items-center justify-center gap-2 font-medium text-[14px]">
+                  <ChevronDown className="text-black dark:text-white" />
                   <p>Genre</p>
                 </NavigationMenuTrigger>
 
-                <NavigationMenuContent className="p-[20px] border border-[#E4E4E7] rounded h-[333px] max-w-[577px] bg-white">
+                <NavigationMenuContent className="p-[20px] border border-[#E4E4E7] rounded h-[333px] max-w-[577px] bg-white dark:bg-black">
                   <div className="h-[36px]">
                     <h3 className="font-semibold text-[24px]">Genre</h3>
                     <p>See lists of movies by genre</p>
@@ -91,7 +91,7 @@ export function Header() {
                           onClick={() => router.push(`/genre/${genre.id}`)}
                           className="flex items-center border border-[#E4E4E7] rounded-full gap-[11px] px-[10px] cursor-pointer hover:bg-[#F4F4F5] transition w-fit"
                         >
-                          <p className="text-[12px] inter font-semibold text-[#09090B]  mr-1">
+                          <p className="text-[12px] inter font-semibold  mr-1">
                             {genre.name}
                           </p>
                           <ChevronRight2 />

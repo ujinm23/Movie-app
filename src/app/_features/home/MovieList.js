@@ -54,9 +54,9 @@ export const MovieList = ({ type, seeMore }) => {
         {seeMore && (
           <button
             onClick={handleSeeMoreButton}
-            className="flex justify-center items-center p-0 h-[36px] text-[14px] text-[#09090B] gap-[8px]"
+            className="flex justify-center items-center p-0 h-[36px] text-[14px] gap-[8px]"
           >
-            <p className="w-[64px] font-medium text-[#09090B]">See More</p>
+            <p className="w-[64px] font-medium">See More</p>
             <ArrowRight />
           </button>
         )}
@@ -64,9 +64,10 @@ export const MovieList = ({ type, seeMore }) => {
 
       <div className="w-[1277px] h-[910px] overflow-hidden">
         <div className="grid grid-rows-2 grid-cols-5 gap-[32px] top-[191px] left-[52px]">
-          {popularMoviesData.map((movie, index) => (
+          {popularMoviesData.map((movie) => (
             <MovieCard
-              key={index}
+              key={movie.id} // Use movie.id as key, not index
+              movieId={movie.id}
               title={movie.title}
               imageURL={movie.poster_path}
               rating={movie.vote_average}

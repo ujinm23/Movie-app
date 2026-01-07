@@ -8,20 +8,16 @@ import { Footer } from "@/app/_features/Footer";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { StarIcon2 } from "@/app/_icons/StarIcon2";
 import { ACCESS_TOKEN, BASE_URL } from "@/constants";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
+import { PlayIcon } from "@/app/_icons/PlayIcon";
 
 export default function MovieDetails() {
   const { id } = useParams();
   const router = useRouter();
+  const [showTrailer, setShowTrailer] = useState(false);
+  const [posterLoading, setPosterLoading] = useState(true);
+  const [backdropLoading, setBackdropLoading] = useState(true);
+
   const [movieDetail, setMovieData] = useState(null);
   const [moviePeople, setPeople] = useState([]);
   const [movieTrailer, setMovieTrailer] = useState({});
@@ -110,8 +106,8 @@ export default function MovieDetails() {
   }, [id]);
 
   const handleMoreButton = () => {
-  router.push(`/movies/similar/${id}`);
-};
+    router.push(`/movies/similar/${id}`);
+  };
 
   return (
     <div className="flex flex-col items-center gap-[52px]">
@@ -137,9 +133,9 @@ export default function MovieDetails() {
           </div>
 
           <div className="flex flex-col items-start">
-            <p className="font-medium text-gray-600 text-[12px] mb-1">Rating</p>
+            <p className="font-medium text-[12px] mb-1">Rating</p>
             <div className="flex items-center gap-1">
-              <StarIcon2 />
+              <StarIcon2 className="text-[#FDE047] dark:text-[#FAFAFA]" />
               <div className="flex-col">
                 <div className="flex items-center">
                   <span className="font-semibold text-[18px]">
@@ -148,7 +144,6 @@ export default function MovieDetails() {
                   <span className="text-[#71717A] text-[16px]">/10</span>
                 </div>
                 <span className="text-[#71717A] text-[12px]">
-                  {" "}
                   {movieDetail?.vote_count &&
                     `${Math.round(movieDetail.vote_count / 1000)}k`}
                 </span>
@@ -159,46 +154,58 @@ export default function MovieDetails() {
 
         {/* IMAGES */}
         <div className="flex gap-8">
+          {posterLoading && (
+            <div className="w-[290px] h-[428px] bg-gray-300 dark:bg-gray-600" />
+          )}
           <img
             className="w-[290px] h-[428px] rounded-sm object-cover"
             src={`https://image.tmdb.org/t/p/original${movieDetail?.poster_path}`}
             alt={movieDetail?.title}
+            onLoad={() => setPosterLoading(false)}
+            onError={() => setPosterLoading(false)}
           />
-          <div className="relative">
-            <img
-              className="w-[760px] h-[428px] rounded-sm object-cover "
-              src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
-              alt={movieDetail?.title}
-            />
-            <Dialog>
-              <form>
-                <DialogTrigger asChild>
+          <div className="relative w-[760px] h-[428px] rounded-sm overflow-hidden bg-black">
+            {/* Skeleton while image loads */}
+            {backdropLoading && !showTrailer && (
+              <div className="w-[760px] h-[428px]  bg-gray-300 dark:bg-gray-700" />
+            )}
+
+            {/* Trailer iframe */}
+            {showTrailer && movieTrailer?.key ? (
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${movieTrailer.key}?autoplay=1&mute=1`}
+                title="Movie Trailer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <>
+                {/* Backdrop image */}
+                <img
+                  className={`w-full h-full object-cover ${
+                    backdropLoading ? "hidden" : "block"
+                  }`}
+                  src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
+                  alt={movieDetail?.title}
+                  onLoad={() => setBackdropLoading(false)}
+                  onError={() => setBackdropLoading(false)}
+                />
+
+                {/* Play button */}
+                {!backdropLoading && (
                   <button
-                    style={{ cursor: "pointer" }}
-                    className="absolute left-6 bottom-6 flex items-center gap-3  text-white"
+                    onClick={() => setShowTrailer(true)}
+                    className="absolute left-6 bottom-6 flex items-center gap-3 text-white"
                   >
-                    <div className="flex items-center rounded-full bg-white h-10 w-10 px-3 py-3 text-black">
-                      ▶
+                    <div className="flex items-center justify-center rounded-full bg-white h-10 w-10 text-black">
+                      <PlayIcon />
                     </div>
-                    Play trailer 2:35
+                    Play trailer
                   </button>
-                </DialogTrigger>
-                <DialogContent className="h-[562px] w-[997px] p-0 flex justify-center items-center object-cover bg-[#F4F4F5]">
-                  <DialogTitle className="display: hidden">
-                    
-                  </DialogTitle>
-                  <div>
-                    <iframe
-                      width={997}
-                      height={562}
-                      src={`https://www.youtube.com/embed/${movieTrailer.key}`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </DialogContent>
-              </form>
-            </Dialog>
+                )}
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-5 max-w-[1080px]">
@@ -223,29 +230,21 @@ export default function MovieDetails() {
         {/* Director / Writers / Stars */}
         <section className="space-y-1 text-[16px] leading-7 border-t border-gray-200 pt-4">
           <p>
-            <span className="font-semibold">Director</span>{" "}
-            {directorNames}
+            <span className="font-semibold">Director</span> {directorNames}
           </p>
           <p>
-            <span className="font-semibold">Writers</span>{" "}
-            {writerNames}
+            <span className="font-semibold">Writers</span> {writerNames}
           </p>
           <p>
-            <span className="font-semibold">Stars</span>{" "}
-            {starNames}
+            <span className="font-semibold">Stars</span> {starNames}
           </p>
         </section>
 
         {/* More like this */}
         <section className="pt-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-[22px] font-semibold ">
-              More like this
-            </h2>
-            <button
-              onClick={handleMoreButton}
-              className="text-[14px] "
-            >
+            <h2 className="text-[22px] font-semibold ">More like this</h2>
+            <button onClick={handleMoreButton} className="text-[14px] ">
               See more →
             </button>
           </div>

@@ -2,16 +2,16 @@ import * as React from "react"
 export const DarkModeIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={13}
-    height={13}
+    width={16}
+    height={16}
     fill="none"
     {...props}
   >
     <path
-      stroke="#18181B"
+      stroke="#FAFAFA"
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M6.5.5a4.243 4.243 0 1 0 6 6 6 6 0 1 1-6-6Z"
+      d="M8 2a4.243 4.243 0 1 0 6 6 6 6 0 1 1-6-6Z"
     />
   </svg>
 )

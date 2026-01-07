@@ -52,7 +52,7 @@ export function MovieCard({
       <div className={`${currentSize.content} p-[8px]`}>
         <div className="flex flex-col items-start">
           <div className="flex items-center gap-[4px]">
-            <StarIcon className="w-[16px] h-[18px] object-contain" />
+            <StarIcon className="w-[16px] h-[18px] object-contain text-[#FDE047] dark:text-[#FAFAFA]" />
             <div className="flex items-center">
               <p className="font-medium text-[14px]">
                 {Number(rating).toFixed(1)}
