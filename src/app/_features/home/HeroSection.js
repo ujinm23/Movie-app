@@ -95,7 +95,7 @@ export function HeroSection() {
   if (loading)
     return (
       <div>
-       <HeroSkeletonCard/>
+        <HeroSkeletonCard />
       </div>
     );
 
@@ -115,14 +115,14 @@ export function HeroSection() {
                       backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                     }}
                   >
-                    <div className="text-[#FFFFFF] flex w-[404px] flex-col gap-[16px] pl-[140px] pt-[144px]">
+                    <div className="text-[#FFFFFF] dark:text-[#FFFFFF] flex w-[404px] flex-col gap-[16px] pl-[140px] pt-[144px]">
                       <div className="flex flex-col gap-0">
                         <p className=" font-normal text-[16px]">Now Playing:</p>
                         <span className="text-[36px] w-[404px] inter font-bold text-sm/10">
                           {movie.title}
                         </span>
                         <div className="flex text-[18px] items-center">
-                          <StarIcon className=" text-[#FDE047] dark:text-[#FAFAFA]"/>
+                          <StarIcon className=" text-[#FDE047] dark:text-[#FAFAFA]" />
                           <span className="font-semibold">
                             {Number(movie.vote_average).toFixed(1)}
                           </span>
