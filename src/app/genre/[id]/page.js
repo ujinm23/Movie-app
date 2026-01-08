@@ -91,9 +91,9 @@ export default function GenreType() {
                   <div
                     key={genre.id}
                     onClick={() => router.push(`/genre/${genre.id}`)}
-                    className="flex items-center border border-[#E4E4E7] rounded-full gap-[11px] px-[10px] cursor-pointer hover:bg-[#F4F4F5] transition w-fit"
+                    className="flex items-center border border-[#E4E4E7] rounded-full gap-[11px] px-[10px] cursor-pointer  w-fit"
                   >
-                    <p className="text-[12px] inter font-semibold text-[#09090B]  mr-1">
+                    <p className="text-[12px] inter font-semibold  mr-1">
                       {genre.name}
                     </p>
                     <ChevronRight2 />
